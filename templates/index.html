@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Example</title>
+    <style>
+  
+
+#chat-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: greenyellow;
+}
+
+        #chat-container {
+            max-width: 500px;
+            
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: greenyellow;
+        }
+
+        #chat-output {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #send-btn {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }   
+    </style>
+</head>
+<body>
+    <div id="liquid-flow"></div>
+    <div id="chat-container">
+        <h1>Tourist ChatBot </h1>
+        <div id="chat-output">
+            
+        </div>
+        <input type="text" id="user-input" autocomplete="off">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        
+        $(document).ready(function() {
+            // Handle form submission
+            $('button#send-btn').click(function() {
+                sendMessage();
+            });
+
+            $('#user-input').keypress(function(event) {
+                if (event.keyCode === 13) {
+                    sendMessage();
+                }
+            });
+
+            // Send user message and receive response
+            function sendMessage() {
+                var message = $('#user-input').val().trim();
+                if (message !== '') {
+                    $('#chat-output').append('<p><strong>You:</strong> ' + message + '</p>');
+                    $('#user-input').val('');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/chat',
+                        data: { message: message },
+                        success: function(response) {
+                            var chatbotResponse = response.response;
+                            var image_url = response.image_url;
+                            var show_image=response.show_image;
+                            
+                            $('#chat-output').append('<p><strong>Chatbot:</strong> ' + chatbotResponse + '</p>');
+                            
+                            if (show_image && image_url !== '') {
+                                var imgTag = '<img src="' + image_url + '" alt="Chatbot Image" width="500px" height="40%" >';
+                               
+                                $('#chat-output').append(imgTag);
+                            }else {
+                            $('#chat-output').append('<p></p>');
+                        }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
