@@ -1,8 +1,13 @@
 # bard
-project to guide tourist
-run main.py file in your terminal
-open terminak
-run the following cmmand
-python main.py or python3 main.py
+#download this folder
 
-in this folder app.py is not for our project
+#project to guide tourist
+
+#run main.py file in your terminal
+#open terminal
+#run the following cmmand
+#python main.py or python3 main.py
+
+#in this folder app.py is not for our project 
+
+
